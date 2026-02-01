@@ -41,18 +41,31 @@ class PopularFoodCard extends StatelessWidget {
               children: [
                 Hero(
                   tag: 'food_${food.id}',
-                  child: Image.network(
-                    food.thumbnail,
-                    height: 120,
-                    width: 180,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      height: 120,
-                      width: 180,
-                      color: Colors.grey[200],
-                      child: const Icon(Icons.fastfood, color: Colors.grey),
-                    ),
-                  ),
+                  child: food.thumbnail.startsWith('assets/')
+                      ? Image.asset(
+                          food.thumbnail,
+                          height: 120,
+                          width: 180,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            height: 120,
+                            width: 180,
+                            color: Colors.grey[200],
+                            child: const Icon(Icons.fastfood, color: Colors.grey),
+                          ),
+                        )
+                      : Image.network(
+                          food.thumbnail,
+                          height: 120,
+                          width: 180,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            height: 120,
+                            width: 180,
+                            color: Colors.grey[200],
+                            child: const Icon(Icons.fastfood, color: Colors.grey),
+                          ),
+                        ),
                 ),
               Positioned(
                 top: 8,

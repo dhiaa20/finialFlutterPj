@@ -23,10 +23,15 @@ class FoodDetailsPage extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
                 tag: 'food_${food.id}',
-                child: Image.network(
-                  food.thumbnail,
-                  fit: BoxFit.cover,
-                ),
+                child: food.thumbnail.startsWith('assets/')
+                    ? Image.asset(
+                        food.thumbnail,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        food.thumbnail,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             leading: CircleAvatar(

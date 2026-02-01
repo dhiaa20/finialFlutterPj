@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:exam_flutter/features/food/models/food_model.dart';
 import 'package:exam_flutter/features/food/models/review_model.dart';
 import 'package:exam_flutter/features/food/services/api_service.dart';
+import 'package:exam_flutter/core/constants/app_constants.dart';
 
 class FoodProvider with ChangeNotifier {
   final ApiService _apiService;
@@ -61,32 +62,36 @@ class FoodProvider with ChangeNotifier {
   }
 
   FoodModel _addDummyReviews(FoodModel food) {
-    // Only add reviews if empty (to avoid overwriting if we had real data)
-    if (food.reviews.isNotEmpty) return food;
+    // Determine asset image based on cuisine
+    // final assetImage = AppConstants.cuisineLandmarks[food.category] ?? 
+    //     AppConstants.defaultRestaurantImage;
 
-    final reviews = [
-      ReviewModel(
-        id: '1',
-        userName: 'John Doe',
-        rating: 5.0,
-        comment: 'Absolutely delicious! The flavors were perfectly balanced.',
-        date: DateTime.now().subtract(const Duration(days: 2)),
-      ),
-      ReviewModel(
-        id: '2',
-        userName: 'Jane Smith',
-        rating: 4.5,
-        comment: 'Great food, fast delivery. Will order again.',
-        date: DateTime.now().subtract(const Duration(days: 5)),
-      ),
-      ReviewModel(
-        id: '3',
-        userName: 'Mike Johnson',
-        rating: 4.0,
-        comment: 'Good portion size, but could be a bit spicier.',
-        date: DateTime.now().subtract(const Duration(days: 10)),
-      ),
-    ];
+    // Use existing reviews or add dummy ones
+    final reviews = food.reviews.isNotEmpty 
+        ? food.reviews 
+        : [
+            ReviewModel(
+              id: '1',
+              userName: 'John Doe',
+              rating: 5.0,
+              comment: 'Absolutely delicious! The flavors were perfectly balanced.',
+              date: DateTime.now().subtract(const Duration(days: 2)),
+            ),
+            ReviewModel(
+              id: '2',
+              userName: 'Jane Smith',
+              rating: 4.5,
+              comment: 'Great food, fast delivery. Will order again.',
+              date: DateTime.now().subtract(const Duration(days: 5)),
+            ),
+            ReviewModel(
+              id: '3',
+              userName: 'Mike Johnson',
+              rating: 4.0,
+              comment: 'Good portion size, but could be a bit spicier.',
+              date: DateTime.now().subtract(const Duration(days: 10)),
+            ),
+          ];
 
     return FoodModel(
       id: food.id,
@@ -95,7 +100,7 @@ class FoodProvider with ChangeNotifier {
       price: food.price,
       rating: food.rating,
       category: food.category,
-      thumbnail: food.thumbnail,
+      thumbnail: food.thumbnail, // Revert to network image for specific food details
       ingredients: food.ingredients,
       prepTime: food.prepTime,
       reviews: reviews,

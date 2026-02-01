@@ -21,7 +21,7 @@ import 'package:exam_flutter/features/location/providers/location_provider.dart'
 import 'package:exam_flutter/features/notifications/providers/notification_provider.dart';
 
 // Screens
-import 'package:exam_flutter/features/welcome/screens/welcome_screen.dart';
+
 import 'package:exam_flutter/features/authentication/screens/sign_in_screen.dart';
 import 'package:exam_flutter/features/authentication/screens/sign_up_screen.dart';
 import 'package:exam_flutter/features/authentication/screens/forgot_password_screen.dart';
