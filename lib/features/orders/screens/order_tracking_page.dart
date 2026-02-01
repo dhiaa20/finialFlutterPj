@@ -99,7 +99,7 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
               stepBorderRadius: 15,
               borderThickness: 2,
               padding: const EdgeInsets.all(20),
-              loadingAnimation: 'fade',
+
               steps: const [
                 EasyStep(
                   icon: Icon(Icons.receipt_long),

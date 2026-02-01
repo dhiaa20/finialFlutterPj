@@ -1,3 +1,4 @@
+import 'package:exam_flutter/features/welcome/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -84,7 +85,7 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             initialRoute: authProvider.isAuthenticated ? '/home' : '/',
             routes: {
-              '/': (context) => const MainShell(),
+              '/': (context) => const WelcomeScreen(),
               '/signin': (context) => const SignInScreen(),
               '/signup': (context) => const SignUpScreen(),
               '/forgot-password': (context) => const ForgotPasswordScreen(),

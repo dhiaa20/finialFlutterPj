@@ -17,7 +17,9 @@ class _FoodListPageState extends State<FoodListPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final restaurant = ModalRoute.of(context)!.settings.arguments as RestaurantModel;
-    context.read<FoodProvider>().fetchFoodsByCategory(restaurant.category);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<FoodProvider>().fetchFoodsByCategory(restaurant.category);
+    });
   }
 
   @override
