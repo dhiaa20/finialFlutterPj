@@ -95,8 +95,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppConstants.backgroundColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.white,
+              AppConstants.primaryOrange.withOpacity(0.05),
+              AppConstants.primaryOrange.withOpacity(0.1),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
           padding: const EdgeInsets.all(AppConstants.spacing24),
           child: Form(
             key: _formKey,
@@ -296,6 +308,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ],
             ),
           ),
+        ),
         ),
       ),
     );

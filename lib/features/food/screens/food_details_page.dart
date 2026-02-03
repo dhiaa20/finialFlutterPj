@@ -5,6 +5,8 @@ import 'package:exam_flutter/features/food/models/food_model.dart';
 import 'package:exam_flutter/features/cart/providers/cart_provider.dart';
 import 'package:exam_flutter/features/food/widgets/review_dialog.dart';
 import 'package:exam_flutter/features/food/providers/food_provider.dart';
+import 'package:exam_flutter/features/food/providers/review_provider.dart';
+import 'package:exam_flutter/features/food/models/review_model.dart';
 
 class FoodDetailsPage extends StatelessWidget {
   const FoodDetailsPage({super.key});
@@ -76,7 +78,16 @@ class FoodDetailsPage extends StatelessWidget {
                               builder: (context) => ReviewDialog(
                                 foodTitle: food.title,
                                 onSubmit: (rating, comment) {
+                                  final review = ReviewModel(
+                                    id: DateTime.now().millisecondsSinceEpoch.toString(),
+                                    userName: 'You',
+                                    foodName: food.title,
+                                    rating: rating,
+                                    comment: comment,
+                                    date: DateTime.now(),
+                                  );
                                   context.read<FoodProvider>().addReview(food.id, rating, comment);
+                                  context.read<ReviewProvider>().addReview(food.id, review);
                                 },
                               ),
                             );

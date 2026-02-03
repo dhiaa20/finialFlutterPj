@@ -9,6 +9,7 @@ import 'package:exam_flutter/features/food/widgets/popular_food_card.dart';
 import 'package:exam_flutter/features/notifications/providers/notification_provider.dart';
 import 'package:exam_flutter/features/food/models/promotion_model.dart';
 import 'package:exam_flutter/features/food/widgets/promotion_card.dart';
+import 'package:exam_flutter/features/main_shell/widgets/app_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,7 +40,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isWideScreen = MediaQuery.of(context).size.width > 600;
+
     return Scaffold(
+      drawer: const AppDrawer(),
       body: RefreshIndicator(
         onRefresh: () async {
           final restaurantProvider = context.read<RestaurantProvider>();
@@ -60,6 +64,18 @@ class _HomePageState extends State<HomePage> {
               pinned: true,
               expandedHeight: 100,
               flexibleSpace: FlexibleSpaceBar(
+                background: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        AppConstants.primaryOrange,
+                        AppConstants.accentRed,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                ),
                 titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
                 title: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -71,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                       builder: (context, location, child) {
                         return Text(
                           location.currentAddress,
-                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
                           overflow: TextOverflow.ellipsis,
                         );
                       },
@@ -264,7 +280,9 @@ class _HomePageState extends State<HomePage> {
                               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/popular-foods');
+                              },
                               child: const Text('View All', style: TextStyle(color: AppConstants.primaryOrange)),
                             ),
                           ],
@@ -309,7 +327,7 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             
-            // Restaurant List
+            // Restaurant List / Grid
             Consumer<RestaurantProvider>(
               builder: (context, provider, child) {
                 if (provider.isLoading) {
@@ -337,15 +355,34 @@ class _HomePageState extends State<HomePage> {
 
                 return SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: AppConstants.spacing16),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final restaurant = provider.restaurants[index];
-                        return RestaurantCard(restaurant: restaurant);
-                      },
-                      childCount: provider.restaurants.length,
-                    ),
-                  ),
+                  sliver: isWideScreen
+                      ? SliverGrid(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.9,
+                            mainAxisSpacing: AppConstants.spacing16,
+                            crossAxisSpacing: AppConstants.spacing16,
+                          ),
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              final restaurant = provider.restaurants[index];
+                              return RestaurantCard(restaurant: restaurant);
+                            },
+                            childCount: provider.restaurants.length,
+                          ),
+                        )
+                      : SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              final restaurant = provider.restaurants[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: AppConstants.spacing20),
+                                child: RestaurantCard(restaurant: restaurant),
+                              );
+                            },
+                            childCount: provider.restaurants.length,
+                          ),
+                        ),
                 );
               },
             ),

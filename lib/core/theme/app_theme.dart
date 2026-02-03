@@ -104,6 +104,77 @@ class AppTheme {
     );
   }
 
+  /// Get the dark theme data
+  static ThemeData get darkTheme {
+    return ThemeData(
+      useMaterial3: true,
+      
+      // Color scheme
+      colorScheme: ColorScheme.dark(
+        primary: AppConstants.primaryOrange,
+        secondary: const Color(0xFFE5E5E5),
+        surface: const Color(0xFF1E1E1E),
+        error: AppConstants.errorRed,
+        onPrimary: Colors.white,
+        onSecondary: Colors.black,
+        onSurface: Colors.white,
+        onError: Colors.white,
+      ),
+      
+      scaffoldBackgroundColor: const Color(0xFF121212),
+      
+      // Typography
+      textTheme: GoogleFonts.interTextTheme(
+        const TextTheme(
+          displayLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+          displayMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
+          bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.white70),
+          bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.white70),
+        ),
+      ),
+      
+      // App bar theme
+      appBarTheme: AppBarTheme(
+        backgroundColor: const Color(0xFF1E1E1E),
+        foregroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        titleTextStyle: GoogleFonts.inter(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
+      
+      // Card theme
+      cardTheme: CardThemeData(
+        color: const Color(0xFF1E1E1E),
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusLarge),
+        ),
+      ),
+
+      // Input theme
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: const Color(0xFF2C2C2C),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
+          borderSide: const BorderSide(color: AppConstants.primaryOrange, width: 1.5),
+        ),
+      ),
+    );
+  }
+
   /// Gradient for buttons and backgrounds
   static LinearGradient get primaryGradient => const LinearGradient(
         colors: [

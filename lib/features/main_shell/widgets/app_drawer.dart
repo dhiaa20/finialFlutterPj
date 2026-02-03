@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:exam_flutter/core/constants/app_constants.dart';
 import 'package:exam_flutter/features/authentication/providers/auth_provider.dart';
+import 'package:exam_flutter/core/theme/theme_provider.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -9,6 +10,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<AuthProvider>().currentUser;
+    final themeProvider = context.watch<ThemeProvider>();
 
     return Drawer(
       child: Column(
@@ -30,19 +32,31 @@ class AppDrawer extends StatelessWidget {
             accountEmail: Text(user?.email ?? ''),
           ),
           ListTile(
+            leading: const Icon(Icons.rate_review_outlined),
+            title: const Text('My Reviews'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/my-reviews');
+            },
+          ),
+          SwitchListTile(
+            secondary: Icon(
+              themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode,
+              color: themeProvider.isDarkMode ? Colors.amber : Colors.grey,
+            ),
+            title: const Text('Dark Mode'),
+            value: themeProvider.isDarkMode,
+            onChanged: (value) {
+              themeProvider.toggleTheme();
+            },
+          ),
+          const Divider(),
+          ListTile(
             leading: const Icon(Icons.favorite_outline),
             title: const Text('Favorites'),
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/favorites');
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.settings_outlined),
-            title: const Text('Settings'),
-            onTap: () {
-              Navigator.pop(context);
-              // Navigate to settings
             },
           ),
           const Divider(),

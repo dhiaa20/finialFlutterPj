@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:exam_flutter/core/theme/app_theme.dart';
+import 'package:exam_flutter/core/theme/theme_provider.dart';
+import 'package:exam_flutter/features/food/providers/review_provider.dart';
 
 // Services
 import 'package:exam_flutter/features/authentication/services/local_data_source.dart';
@@ -36,6 +38,8 @@ import 'package:exam_flutter/features/profile/screens/payment_methods_page.dart'
 import 'package:exam_flutter/features/food/screens/restaurant_map_page.dart';
 import 'package:exam_flutter/features/notifications/screens/notification_page.dart';
 import 'package:exam_flutter/features/food/screens/promotion_detail_page.dart';
+import 'package:exam_flutter/features/food/screens/my_reviews_page.dart';
+import 'package:exam_flutter/features/food/screens/popular_foods_page.dart';
 import 'package:exam_flutter/features/food/models/promotion_model.dart';
 import 'package:exam_flutter/features/profile/providers/profile_provider.dart';
 import 'package:exam_flutter/features/profile/screens/edit_profile_page.dart';
@@ -76,13 +80,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LocationProvider(locationService)),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider(prefs)),
+        ChangeNotifierProvider(create: (_) => ThemeProvider(prefs)),
+        ChangeNotifierProvider(create: (_) => ReviewProvider(prefs)),
       ],
-      child: Consumer<AuthProvider>(
-        builder: (context, authProvider, child) {
+      child: Consumer2<AuthProvider, ThemeProvider>(
+        builder: (context, authProvider, themeProvider, child) {
           return MaterialApp(
             title: 'Food Delivery',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeProvider.themeMode,
             initialRoute: authProvider.isAuthenticated ? '/home' : '/',
             routes: {
               '/': (context) => const WelcomeScreen(),
@@ -98,6 +106,8 @@ class MyApp extends StatelessWidget {
               '/payment-methods': (context) => const PaymentMethodsPage(),
               '/map': (context) => const RestaurantMapPage(),
               '/notifications': (context) => const NotificationPage(),
+              '/my-reviews': (context) => const MyReviewsPage(),
+              '/popular-foods': (context) => const PopularFoodsPage(),
               '/promotion-detail': (context) {
                 final promotion = ModalRoute.of(context)!.settings.arguments as PromotionModel;
                 return PromotionDetailPage(promotion: promotion);

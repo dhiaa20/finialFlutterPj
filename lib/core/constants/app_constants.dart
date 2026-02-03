@@ -7,11 +7,11 @@ class AppConstants {
 
   // ==================== COLORS ====================
   
-  /// Primary orange color for food delivery theme
-  static const Color primaryOrange = Color(0xFFFF6B35);
+  /// Primary vibrant color (Modern Coral/Red-Orange)
+  static const Color primaryOrange = Color(0xFFFF4757);
   
-  /// Accent red color
-  static const Color accentRed = Color(0xFFE63946);
+  /// Accent color
+  static const Color accentRed = Color(0xFFFF6348);
   
   /// Dark text color
   static const Color darkText = Color(0xFF2D3142);
@@ -19,8 +19,8 @@ class AppConstants {
   /// Light text color
   static const Color lightText = Color(0xFF8B8B8B);
   
-  /// Background color
-  static const Color backgroundColor = Color(0xFFF8F9FA);
+  /// Background color (Clean White)
+  static const Color backgroundColor = Color(0xFFFFFFFF);
   
   /// Success green
   static const Color successGreen = Color(0xFF06D6A0);

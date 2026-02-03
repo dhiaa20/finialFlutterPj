@@ -102,7 +102,7 @@ lib/
 ## 📖 Module Breakdown
 
 ### 1. The Core Layer (`lib/core`)
-Contains the building blocks of the UI. `AppConstants` defines the Color Palette (Primary Orange `#FF6B35`) and asset mappings to ensure consistent branding.
+Contains the building blocks of the UI. `AppConstants` defines the Color Palette (Primary Modern Coral `#FF4757`) and asset mappings to ensure consistent branding.
 
 ### 2. Food Module (`lib/features/food`)
 This is the heart of the app.
