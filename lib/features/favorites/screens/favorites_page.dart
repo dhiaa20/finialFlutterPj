@@ -43,7 +43,9 @@ class FavoriteRestaurantsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final favoritesProvider = context.watch<FavoritesProvider>();
     final restaurantProvider = context.watch<RestaurantProvider>();
-    final isWideScreen = MediaQuery.of(context).size.width > 600;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth > 600;
+    final isUltraWide = screenWidth > 1200;
     
     final favoriteRestaurants = restaurantProvider.restaurants
         .where((r) => favoritesProvider.isRestaurantFavorite(r.id))
@@ -65,9 +67,9 @@ class FavoriteRestaurantsList extends StatelessWidget {
     return isWideScreen
         ? GridView.builder(
             padding: const EdgeInsets.all(AppConstants.spacing16),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.9, // Match Home Page grid ratio
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isUltraWide ? 3 : 2,
+              childAspectRatio: isUltraWide ? 1.0 : 0.85,
               mainAxisSpacing: AppConstants.spacing16,
               crossAxisSpacing: AppConstants.spacing16,
             ),
@@ -96,7 +98,9 @@ class FavoriteFoodsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final favoritesProvider = context.watch<FavoritesProvider>();
     final foodProvider = context.watch<FoodProvider>();
-    final isWideScreen = MediaQuery.of(context).size.width > 600;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth > 600;
+    final isUltraWide = screenWidth > 1200;
     
     // Note: This assumes all foods are loaded in the provider. 
     // In a real app, we might need to fetch specific foods by ID.
@@ -120,14 +124,17 @@ class FavoriteFoodsList extends StatelessWidget {
     return isWideScreen
         ? GridView.builder(
             padding: const EdgeInsets.all(AppConstants.spacing16),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 0.8,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isUltraWide ? 4 : (screenWidth > 900 ? 3 : 2),
+              childAspectRatio: isUltraWide ? 0.95 : 0.9,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
             ),
             itemCount: favoriteFoods.length,
-            itemBuilder: (context, index) => FoodCard(food: favoriteFoods[index]),
+            itemBuilder: (context, index) => FoodCard(
+              food: favoriteFoods[index],
+              isVertical: true,
+            ),
           )
         : ListView.builder(
             padding: const EdgeInsets.all(AppConstants.spacing16),

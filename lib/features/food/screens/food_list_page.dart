@@ -25,7 +25,9 @@ class _FoodListPageState extends State<FoodListPage> {
   @override
   Widget build(BuildContext context) {
     final restaurant = ModalRoute.of(context)!.settings.arguments as RestaurantModel;
-    final isLargeScreen = MediaQuery.of(context).size.width > 600;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth > 600;
+    final isUltraWide = screenWidth > 1200;
 
     return Scaffold(
       appBar: AppBar(
@@ -36,7 +38,7 @@ class _FoodListPageState extends State<FoodListPage> {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.location_on, size: 12, color: AppConstants.primaryOrange),
+                const Icon(Icons.location_on, size: 12, color: Colors.white70),
                 const SizedBox(width: 4),
                 Text(
                   restaurant.address,
@@ -61,17 +63,20 @@ class _FoodListPageState extends State<FoodListPage> {
             return const Center(child: Text('No food items found.'));
           }
 
-          return isLargeScreen
+          return isWideScreen
               ? GridView.builder(
                   padding: const EdgeInsets.all(AppConstants.spacing16),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 0.8,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: isUltraWide ? 4 : (screenWidth > 900 ? 3 : 2),
+                    childAspectRatio: isUltraWide ? 0.95 : 0.9,
+                    crossAxisSpacing: AppConstants.spacing16,
+                    mainAxisSpacing: AppConstants.spacing16,
                   ),
                   itemCount: provider.foods.length,
-                  itemBuilder: (context, index) => FoodCard(food: provider.foods[index]),
+                  itemBuilder: (context, index) => FoodCard(
+                    food: provider.foods[index],
+                    isVertical: true,
+                  ),
                 )
               : ListView.builder(
                   padding: const EdgeInsets.all(AppConstants.spacing16),

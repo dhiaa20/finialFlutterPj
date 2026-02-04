@@ -7,28 +7,28 @@ class AppConstants {
 
   // ==================== COLORS ====================
   
-  /// Primary vibrant color (Modern Coral/Red-Orange)
-  static const Color primaryOrange = Color(0xFFFF4757);
+  /// Primary color (Classic Red-Orange)
+  static const Color primaryOrange = Color(0xFFFF5A5F);
   
-  /// Accent color
-  static const Color accentRed = Color(0xFFFF6348);
+  /// Accent Color (Vibrant Gold)
+  static const Color accentAmber = Color(0xFFFFB400);
   
-  /// Dark text color
-  static const Color darkText = Color(0xFF2D3142);
+  /// Standard Dark Text
+  static const Color darkText = Color(0xFF2D2D2D);
   
-  /// Light text color
-  static const Color lightText = Color(0xFF8B8B8B);
+  /// Standard Light Text
+  static const Color lightText = Color(0xFF757575);
   
-  /// Background color (Clean White)
+  /// Standard Background (Pure White)
   static const Color backgroundColor = Color(0xFFFFFFFF);
   
-  /// Success green
-  static const Color successGreen = Color(0xFF06D6A0);
+  /// Success green (Emerald)
+  static const Color successGreen = Color(0xFF27AE60);
   
-  /// Error red
-  static const Color errorRed = Color(0xFFEF476F);
+  /// Error red (Soft Rose)
+  static const Color errorRed = Color(0xFFE74C3C);
   
-  /// White
+  /// Surface White
   static const Color white = Color(0xFFFFFFFF);
 
   // ==================== SPACING ====================
@@ -48,7 +48,7 @@ class AppConstants {
   static const double radiusSmall = 8.0;
   static const double radiusMedium = 12.0;
   static const double radiusLarge = 16.0;
-  static const double radiusXLarge = 24.0;
+  static const double radiusXLarge = 32.0;
   static const double radiusCircular = 100.0;
 
   // ==================== SHARED PREFERENCES KEYS ====================

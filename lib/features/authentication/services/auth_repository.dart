@@ -100,6 +100,24 @@ class AuthRepository {
     }
   }
 
+  /// Update user profile image
+  Future<bool> updateProfileImage(String email, String imageUrl) async {
+    try {
+      final user = await _localDataSource.getUser(email);
+      
+      if (user == null) {
+        throw Exception('User not found');
+      }
+      
+      // Update profile image
+      final updatedUser = user.copyWith(profileImage: imageUrl);
+      
+      return await _localDataSource.updateUser(updatedUser);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   /// Get user by email
   Future<UserModel?> getUserByEmail(String email) async {
     try {

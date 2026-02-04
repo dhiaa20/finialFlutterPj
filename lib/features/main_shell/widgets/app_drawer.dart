@@ -18,15 +18,20 @@ class AppDrawer extends StatelessWidget {
           UserAccountsDrawerHeader(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [AppConstants.primaryOrange, AppConstants.accentRed],
+                colors: [AppConstants.primaryOrange, AppConstants.accentAmber],
               ),
             ),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
-              child: Text(
-                user?.name[0].toUpperCase() ?? 'U',
-                style: const TextStyle(fontSize: 32, color: AppConstants.primaryOrange),
-              ),
+              backgroundImage: user?.profileImage != null 
+                ? NetworkImage(user!.profileImage!) 
+                : null,
+              child: user?.profileImage == null 
+                ? Text(
+                    user?.name[0].toUpperCase() ?? 'U',
+                    style: const TextStyle(fontSize: 32, color: AppConstants.primaryOrange, fontWeight: FontWeight.bold),
+                  )
+                : null,
             ),
             accountName: Text(user?.name ?? 'User'),
             accountEmail: Text(user?.email ?? ''),

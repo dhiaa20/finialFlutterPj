@@ -109,6 +109,21 @@ class AuthService {
     }
   }
 
+  /// Update profile image
+  Future<bool> updateProfileImage({
+    required String email,
+    required String imageUrl,
+  }) async {
+    try {
+      return await _repository.updateProfileImage(
+        email.trim().toLowerCase(),
+        imageUrl,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   /// Verify if email exists
   Future<bool> emailExists(String email) async {
     try {

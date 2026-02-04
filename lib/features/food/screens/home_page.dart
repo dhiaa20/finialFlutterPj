@@ -40,7 +40,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isWideScreen = MediaQuery.of(context).size.width > 600;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth > 600;
+    final isUltraWide = screenWidth > 1200;
 
     return Scaffold(
       drawer: const AppDrawer(),
@@ -58,23 +60,16 @@ class _HomePageState extends State<HomePage> {
         },
         child: CustomScrollView(
           slivers: [
-            // Custom AppBar with Location
+            // Original Custom AppBar with Location (Solid Airbnb Color)
             SliverAppBar(
               floating: true,
               pinned: true,
               expandedHeight: 100,
+              backgroundColor: AppConstants.primaryOrange,
+              iconTheme: const IconThemeData(color: Colors.white),
               flexibleSpace: FlexibleSpaceBar(
                 background: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        AppConstants.primaryOrange,
-                        AppConstants.accentRed,
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
+                  color: AppConstants.primaryOrange,
                 ),
                 titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
                 title: Column(
@@ -97,7 +92,7 @@ class _HomePageState extends State<HomePage> {
               ),
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.map_outlined),
+                  icon: const Icon(Icons.map_outlined, color: Colors.white),
                   onPressed: () => Navigator.pushNamed(context, '/map'),
                 ),
                 Consumer<NotificationProvider>(
@@ -105,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                     return Stack(
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.notifications_none),
+                          icon: const Icon(Icons.notifications_none, color: Colors.white),
                           onPressed: () => Navigator.pushNamed(context, '/notifications'),
                         ),
                         if (provider.unreadCount > 0)
@@ -115,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                             child: Container(
                               padding: const EdgeInsets.all(2),
                               decoration: BoxDecoration(
-                                color: Colors.red,
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               constraints: const BoxConstraints(
@@ -125,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 '${provider.unreadCount}',
                                 style: const TextStyle(
-                                  color: Colors.white,
+                                  color: AppConstants.primaryOrange,
                                   fontSize: 10,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -156,15 +151,15 @@ class _HomePageState extends State<HomePage> {
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
-                      borderSide: BorderSide.none,
+                      borderSide: BorderSide(color: Colors.grey.withValues(alpha: 0.1)),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
-                      borderSide: BorderSide.none,
+                      borderSide: BorderSide(color: Colors.grey.withValues(alpha: 0.1)),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
-                      borderSide: const BorderSide(color: AppConstants.primaryOrange, width: 1),
+                      borderSide: const BorderSide(color: AppConstants.primaryOrange, width: 1.5),
                     ),
                     contentPadding: const EdgeInsets.symmetric(vertical: 0),
                   ),
@@ -248,7 +243,7 @@ class _HomePageState extends State<HomePage> {
                           height: 8,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppConstants.primaryOrange.withValues(alpha: 0.3),
+                            color: AppConstants.primaryOrange.withValues(alpha: 0.2),
                           ),
                         ),
                       ),
@@ -357,9 +352,9 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: AppConstants.spacing16),
                   sliver: isWideScreen
                       ? SliverGrid(
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.9,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: isUltraWide ? 3 : 2,
+                            childAspectRatio: isUltraWide ? 1.0 : 0.85,
                             mainAxisSpacing: AppConstants.spacing16,
                             crossAxisSpacing: AppConstants.spacing16,
                           ),

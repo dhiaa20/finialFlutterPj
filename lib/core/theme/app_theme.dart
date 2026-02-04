@@ -15,47 +15,41 @@ class AppTheme {
       // Color scheme
       colorScheme: ColorScheme.light(
         primary: AppConstants.primaryOrange,
-        secondary: const Color(0xFF2D3436),
-        surface: Colors.white,
+        secondary: AppConstants.accentAmber,
+        surface: AppConstants.white,
         error: AppConstants.errorRed,
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
+        onPrimary: AppConstants.white,
+        onSecondary: AppConstants.white,
         onSurface: AppConstants.darkText,
-        onError: Colors.white,
+        onError: AppConstants.white,
       ),
       
-      scaffoldBackgroundColor: const Color(0xFFF8F9FA),
+      scaffoldBackgroundColor: AppConstants.backgroundColor,
       
-      // Typography using Google Fonts
-      textTheme: GoogleFonts.interTextTheme(
-        const TextTheme(
-          displayLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: AppConstants.darkText),
-          displayMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppConstants.darkText),
-          displaySmall: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppConstants.darkText),
-          headlineLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: AppConstants.darkText),
-          headlineMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppConstants.darkText),
-          headlineSmall: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppConstants.darkText),
-          titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppConstants.darkText),
-          titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: AppConstants.darkText),
-          titleSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppConstants.darkText),
-          bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: AppConstants.darkText),
-          bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: AppConstants.darkText),
-          bodySmall: TextStyle(fontSize: 12, fontWeight: FontWeight.normal, color: AppConstants.lightText),
-        ),
+      // Typography
+      textTheme: const TextTheme(
+        displayLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: AppConstants.darkText),
+        displayMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppConstants.darkText),
+        displaySmall: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppConstants.darkText),
+        headlineMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppConstants.darkText),
+        titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppConstants.darkText),
+        bodyLarge: TextStyle(fontSize: 16, color: AppConstants.darkText),
+        bodyMedium: TextStyle(fontSize: 14, color: AppConstants.darkText),
+        bodySmall: TextStyle(fontSize: 12, color: AppConstants.lightText),
       ),
       
       // Input decoration theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: AppConstants.white,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
-          borderSide: BorderSide(color: Colors.grey[200]!),
+          borderSide: BorderSide(color: Colors.grey.withValues(alpha: 0.3)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
-          borderSide: BorderSide(color: Colors.grey[200]!),
+          borderSide: BorderSide(color: Colors.grey.withValues(alpha: 0.3)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
@@ -70,36 +64,37 @@ class AppTheme {
           foregroundColor: Colors.white,
           elevation: 4,
           shadowColor: AppConstants.primaryOrange.withValues(alpha: 0.3),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
           ),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
       
       // App bar theme
-      appBarTheme: AppBarTheme(
-        backgroundColor: Colors.white,
-        foregroundColor: AppConstants.darkText,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppConstants.primaryOrange,
+        foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: GoogleFonts.inter(
-          fontSize: 18,
+        iconTheme: IconThemeData(color: Colors.white),
+        titleTextStyle: TextStyle(
+          fontSize: 20,
           fontWeight: FontWeight.bold,
-          color: AppConstants.darkText,
+          color: Colors.white,
         ),
       ),
       
       // Card theme
       cardTheme: CardThemeData(
-        color: Colors.white,
-        elevation: 8,
+        color: AppConstants.white,
+        elevation: 4,
         shadowColor: Colors.black.withValues(alpha: 0.05),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppConstants.radiusLarge),
+          borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
         ),
-        margin: const EdgeInsets.all(8),
+        margin: const EdgeInsets.all(AppConstants.spacing8),
       ),
     );
   }
@@ -178,8 +173,8 @@ class AppTheme {
   /// Gradient for buttons and backgrounds
   static LinearGradient get primaryGradient => const LinearGradient(
         colors: [
-          AppConstants.primaryOrange,
-          AppConstants.accentRed,
+          Color.fromARGB(255, 216, 33, 13),
+          Color.fromARGB(117, 255, 72, 0),
         ],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,

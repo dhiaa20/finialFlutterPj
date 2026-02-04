@@ -22,18 +22,12 @@ class RestaurantCard extends StatelessWidget {
           arguments: restaurant,
         );
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: AppConstants.spacing16, vertical: AppConstants.spacing8),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusLarge),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF90A4AE).withOpacity(0.15),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-              spreadRadius: 2,
-            ),
-          ],
+          side: BorderSide(color: Colors.grey.withValues(alpha: 0.1), width: 1),
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -43,29 +37,28 @@ class RestaurantCard extends StatelessWidget {
               children: [
                 Hero(
                   tag: 'restaurant_${restaurant.id}',
-                  child: restaurant.imageUrl.startsWith('assets/')
-                      ? Image.asset(
-                          restaurant.imageUrl,
-                          height: 200,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Container(
-                            height: 200,
-                            color: Colors.grey[200],
-                            child: const Icon(Icons.restaurant, size: 50, color: Colors.grey),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: restaurant.imageUrl.startsWith('assets/')
+                        ? Image.asset(
+                            restaurant.imageUrl,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) => Container(
+                              color: Colors.grey[200],
+                              child: const Icon(Icons.restaurant, size: 50, color: Colors.grey),
+                            ),
+                          )
+                        : Image.network(
+                            restaurant.imageUrl,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) => Container(
+                              color: Colors.grey[200],
+                              child: const Icon(Icons.restaurant, size: 50, color: Colors.grey),
+                            ),
                           ),
-                        )
-                      : Image.network(
-                          restaurant.imageUrl,
-                          height: 200,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Container(
-                            height: 200,
-                            color: Colors.grey[200],
-                            child: const Icon(Icons.restaurant, size: 50, color: Colors.grey),
-                          ),
-                        ),
+                  ),
                 ),
                 Positioned(
                   top: 12,

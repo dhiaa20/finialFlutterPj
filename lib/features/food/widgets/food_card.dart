@@ -7,8 +7,9 @@ import 'package:exam_flutter/features/favorites/providers/favorites_provider.dar
 
 class FoodCard extends StatelessWidget {
   final FoodModel food;
+  final bool isVertical;
 
-  const FoodCard({super.key, required this.food});
+  const FoodCard({super.key, required this.food, this.isVertical = false});
 
   @override
   Widget build(BuildContext context) {
@@ -24,104 +25,134 @@ class FoodCard extends StatelessWidget {
         );
       },
       child: Card(
-        margin: const EdgeInsets.only(bottom: AppConstants.spacing16),
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppConstants.radiusMedium)),
+        margin: EdgeInsets.zero,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusLarge),
+          side: BorderSide(color: Colors.grey.withValues(alpha: 0.1), width: 1),
+        ),
         clipBehavior: Clip.antiAlias,
-        child: Row(
-          children: [
-            Stack(
-              children: [
-                Hero(
-                  tag: 'food_${food.id}',
-                  child: Image.network(
-                    food.thumbnail,
-                    height: 110,
-                    width: 110,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      height: 110,
-                      width: 110,
-                      color: Colors.grey[200],
-                      child: const Icon(Icons.fastfood, color: Colors.grey),
-                    ),
+        child: isVertical 
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildImage(isFavorite, favoritesProvider),
+                  _buildContent(context),
+                ],
+              )
+            : Row(
+                children: [
+                  _buildImage(isFavorite, favoritesProvider),
+                  Expanded(child: _buildContent(context)),
+                ],
+              ),
+      ),
+    );
+  }
+
+  Widget _buildImage(bool isFavorite, FavoritesProvider favoritesProvider) {
+    return Stack(
+      children: [
+        Hero(
+          tag: 'food_${food.id}',
+          child: Image.network(
+            food.thumbnail,
+            height: isVertical ? 160 : 110,
+            width: isVertical ? double.infinity : 110,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) => Container(
+              height: isVertical ? 160 : 110,
+              width: isVertical ? double.infinity : 110,
+              color: Colors.grey[200],
+              child: const Icon(Icons.fastfood, color: Colors.grey),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 8,
+          right: 8,
+          child: GestureDetector(
+            onTap: () => favoritesProvider.toggleFoodFavorite(food.id.toString()),
+            child: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.8),
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.1),
+                    blurRadius: 4,
                   ),
+                ],
+              ),
+              child: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? AppConstants.errorRed : AppConstants.lightText,
+                size: 20,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(AppConstants.spacing12, AppConstants.spacing12, AppConstants.spacing12, AppConstants.spacing8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            food.title,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 2),
+          Text(
+            food.category,
+            style: const TextStyle(color: AppConstants.lightText, fontSize: 12),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '\$${food.price.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  color: AppConstants.primaryOrange,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20,
+                  letterSpacing: -0.5,
                 ),
-              Positioned(
-                top: 4,
-                left: 4,
-                child: GestureDetector(
-                  onTap: () => favoritesProvider.toggleFoodFavorite(food.id.toString()),
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.8),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? AppConstants.errorRed : AppConstants.lightText,
-                      size: 18,
-                    ),
+              ),
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    context.read<CartProvider>().addItem(food);
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('${food.title} added to cart!'),
+                        duration: const Duration(seconds: 2),
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
+                  },
+                  borderRadius: BorderRadius.circular(20),
+                  child: const Padding(
+                    padding: EdgeInsets.all(4),
+                    child: Icon(Icons.add_shopping_cart, color: AppConstants.primaryOrange, size: 24),
                   ),
                 ),
               ),
             ],
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(AppConstants.spacing12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    food.title,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    food.category,
-                    style: const TextStyle(color: AppConstants.lightText, fontSize: 12),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '\$${food.price.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          color: AppConstants.primaryOrange,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.add_circle, color: AppConstants.primaryOrange, size: 28),
-                        onPressed: () {
-                          context.read<CartProvider>().addItem(food);
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('${food.title} added to cart!'),
-                              duration: const Duration(seconds: 2),
-                              behavior: SnackBarBehavior.floating,
-                            ),
-                          );
-                        },
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
-    ),
-  );
-}
+    );
+  }
 }

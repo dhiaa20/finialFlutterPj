@@ -7,6 +7,7 @@ class UserModel extends Equatable {
   final String email;
   final String password;
   final String phone;
+  final String? profileImage;
   final DateTime createdAt;
 
   const UserModel({
@@ -15,6 +16,7 @@ class UserModel extends Equatable {
     required this.email,
     required this.password,
     required this.phone,
+    this.profileImage,
     required this.createdAt,
   });
 
@@ -26,6 +28,7 @@ class UserModel extends Equatable {
       email: json['email'] as String,
       password: json['password'] as String,
       phone: json['phone'] as String,
+      profileImage: json['profileImage'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
   }
@@ -38,6 +41,7 @@ class UserModel extends Equatable {
       'email': email,
       'password': password,
       'phone': phone,
+      'profileImage': profileImage,
       'createdAt': createdAt.toIso8601String(),
     };
   }
@@ -49,6 +53,7 @@ class UserModel extends Equatable {
     String? email,
     String? password,
     String? phone,
+    String? profileImage,
     DateTime? createdAt,
   }) {
     return UserModel(
@@ -57,12 +62,13 @@ class UserModel extends Equatable {
       email: email ?? this.email,
       password: password ?? this.password,
       phone: phone ?? this.phone,
+      profileImage: profileImage ?? this.profileImage,
       createdAt: createdAt ?? this.createdAt,
     );
   }
 
   @override
-  List<Object?> get props => [id, name, email, password, phone, createdAt];
+  List<Object?> get props => [id, name, email, password, phone, profileImage, createdAt];
 
   @override
   String toString() {

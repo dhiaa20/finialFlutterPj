@@ -181,6 +181,32 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+  /// Update profile image
+  Future<bool> updateProfileImage(String imageUrl) async {
+    if (_currentUser == null) return false;
+    
+    try {
+      _setLoading(true);
+      
+      final success = await _authService.updateProfileImage(
+        email: _currentUser!.email,
+        imageUrl: imageUrl,
+      );
+      
+      if (success) {
+        _currentUser = _currentUser!.copyWith(profileImage: imageUrl);
+        notifyListeners();
+      }
+      
+      return success;
+    } catch (e) {
+      _setError(e.toString());
+      return false;
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   /// Check if email already exists
   Future<bool> checkEmailExists(String email) async {
     try {

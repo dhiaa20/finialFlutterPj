@@ -19,21 +19,26 @@ class HelpSupportPage extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           _buildSupportItem(
+            context,
             icon: Icons.question_answer_outlined,
             title: 'FAQ',
             subtitle: 'Questions fréquemment posées',
           ),
           _buildSupportItem(
+            context,
             icon: Icons.chat_outlined,
             title: 'Chat en direct',
             subtitle: 'Parlez à un conseiller maintenant',
+            onTap: () => Navigator.pushNamed(context, '/support-chat'),
           ),
           _buildSupportItem(
+            context,
             icon: Icons.email_outlined,
             title: 'Email',
             subtitle: 'support@foodieapp.com',
           ),
           _buildSupportItem(
+            context,
             icon: Icons.phone_outlined,
             title: 'Téléphone',
             subtitle: '+33 1 23 45 67 89',
@@ -53,7 +58,7 @@ class HelpSupportPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSupportItem({required IconData icon, required String title, required String subtitle}) {
+  Widget _buildSupportItem(BuildContext context, {required IconData icon, required String title, required String subtitle, VoidCallback? onTap}) {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
       child: ListTile(
@@ -61,7 +66,7 @@ class HelpSupportPage extends StatelessWidget {
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(subtitle),
         trailing: const Icon(Icons.chevron_right),
-        onTap: () {},
+        onTap: onTap ?? () {},
       ),
     );
   }

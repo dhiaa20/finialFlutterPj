@@ -45,9 +45,13 @@ class _MainShellState extends State<MainShell> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed,
+        backgroundColor: AppConstants.white,
         selectedItemColor: AppConstants.primaryOrange,
         unselectedItemColor: AppConstants.lightText,
         showUnselectedLabels: true,
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+        elevation: 10,
         items: [
           const BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
@@ -65,6 +69,7 @@ class _MainShellState extends State<MainShell> {
                 return Badge(
                   label: Text(cart.itemCount.toString()),
                   isLabelVisible: cart.itemCount > 0,
+                  backgroundColor: AppConstants.primaryOrange,
                   child: const Icon(Icons.shopping_cart_outlined),
                 );
               },

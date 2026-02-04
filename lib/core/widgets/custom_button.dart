@@ -30,7 +30,14 @@ class CustomButton extends StatelessWidget {
       height: height ?? 56,
       decoration: BoxDecoration(
         gradient: isOutlined ? null : AppTheme.primaryGradient,
-        borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
+        borderRadius: BorderRadius.circular(AppConstants.radiusLarge),
+        boxShadow: isOutlined ? null : [
+          BoxShadow(
+            color: AppConstants.primaryOrange.withValues(alpha: 0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
         border: isOutlined
             ? Border.all(
                 color: AppConstants.primaryOrange,
@@ -42,7 +49,7 @@ class CustomButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: isLoading ? null : onPressed,
-          borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
+          borderRadius: BorderRadius.circular(AppConstants.radiusLarge),
           child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: AppConstants.spacing24,

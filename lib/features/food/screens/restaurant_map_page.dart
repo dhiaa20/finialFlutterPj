@@ -21,34 +21,26 @@ class RestaurantMapPage extends StatelessWidget {
 
           return Stack(
             children: [
-              // Simulated Map Background
+              // Real Map Background
               Container(
-                color: Colors.grey[200],
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.map, size: 100, color: Colors.grey[400]),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Interactive Map View',
-                        style: TextStyle(fontSize: 20, color: Colors.grey[600], fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Showing ${provider.restaurants.length} restaurants near you',
-                        style: TextStyle(color: Colors.grey[500]),
-                      ),
-                    ],
+                width: double.infinity,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/mapsGoogle1.jpg'),
+                    fit: BoxFit.cover,
                   ),
+                ),
+                child: Container(
+                  color: Colors.black.withValues(alpha: 0.1), // Subtle overlay for better contrast
                 ),
               ),
 
               // Simulated Markers
               ...provider.restaurants.map((restaurant) {
                 // Randomly position markers for simulation
-                final top = 100.0 + (restaurant.id.hashCode % 400);
-                final left = 50.0 + (restaurant.id.hashCode % 300);
+                final top = 100.0 + (restaurant.id.hashCode % 500);
+                final left = 40.0 + (restaurant.id.hashCode % 320);
 
                 return Positioned(
                   top: top,
@@ -58,18 +50,33 @@ class RestaurantMapPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(4),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: const [BoxShadow(blurRadius: 4, color: Colors.black26)],
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 8,
+                                color: Colors.black.withValues(alpha: 0.3),
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
                           ),
                           child: Text(
                             restaurant.name,
-                            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                              fontSize: 11, 
+                              fontWeight: FontWeight.bold,
+                              color: AppConstants.darkText
+                            ),
                           ),
                         ),
-                        const Icon(Icons.location_on, color: AppConstants.primaryOrange, size: 30),
+                        const Icon(
+                          Icons.location_on_rounded, 
+                          color: AppConstants.primaryOrange, 
+                          size: 36,
+                          shadows: [Shadow(color: Colors.black26, blurRadius: 10)],
+                        ),
                       ],
                     ),
                   ),
